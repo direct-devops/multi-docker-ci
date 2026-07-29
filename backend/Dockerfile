@@ -1,3 +1,3 @@
 FROM alpine:latest
 
-COPY .
+COPY . .
