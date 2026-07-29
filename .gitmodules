@@ -1,0 +1,6 @@
+[submodule "spring-petclinic"]
+	path = spring-petclinic
+	url = https://github.com/direct-devops/spring-petclinic
+[submodule "ansible-roles"]
+	path = ansible-roles
+	url = https://github.com/direct-devops/ansible-roles.git
