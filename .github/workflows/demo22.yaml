@@ -54,5 +54,5 @@ jobs:
           file: ./${{ matrix.service }}/Dockerfile
           push: true
           tags: |
-            ${{ env.REGISTRY }}/${{ matrix.service }}:${{ github.sha }}
-            ${{ env.REGISTRY }}/${{ matrix.service }}:latest
+            ${{ env.REGISTRY }}/qt-dev-dcoker/${{ matrix.service }}:${{ github.sha }}
+            ${{ env.REGISTRY }}/qt-dev-dcoker/${{ matrix.service }}:latest
