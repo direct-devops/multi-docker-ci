@@ -71,7 +71,7 @@ jobs:
         uses: docker/build-push-action@v7
         with:
           context: ./${{ matrix.service }}
-          file: ./${{ matrix.service }}
+          file: ./${{ matrix.service }}/Dockerfile
           push: true
           tags: |
             ${{ env.docker_host }}/${{ env.repo_name }}/${{ matrix.service }}:${{ github.run_number }}
