@@ -25,7 +25,7 @@ on:
 
 env:
   docker_host: 3.208.29.184:8081
-  repo_name: datahub-docker
+  repo_name: ${{ github.ref_name == 'main' && 'datahub-docker' || github.event_name == 'workflow_dispatch' && github.event.inputs.docker_repo ||  'datahub-docker-snapshot' }}
 
 jobs:
   docker_buid_publish:
@@ -67,7 +67,19 @@ jobs:
           username: ${{ secrets.NEXUS_USERNAME }}
           password: ${{ secrets.NEXUS_PASSWORD }}
 
-      - name: Build and push
+      - name: Build and push for Main
+        if: ${{ github.ref_name == 'main' || github.event_name == 'workflow_dispatch'  }}
+        uses: docker/build-push-action@v7
+        with:
+          context: ./${{ matrix.service }}
+          file: ./${{ matrix.service }}/Dockerfile
+          push: true
+          tags: |
+            ${{ env.docker_host }}/${{ env.repo_name }}/${{ matrix.service }}:${{ github.run_number }}
+            ${{ env.docker_host }}/${{ env.repo_name }}/${{ matrix.service }}:latest
+
+      - name: Build and push PR
+        if: ${{ github.event_name == 'pull_request' && github.ref_name != 'main'}}
         uses: docker/build-push-action@v7
         with:
           context: ./${{ matrix.service }}
